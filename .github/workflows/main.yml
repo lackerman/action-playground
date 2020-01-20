@@ -30,7 +30,7 @@ jobs:
 
     - name: build docker image
       run: |
-        docker buildx build -o type=docker --name test-app .
+        docker buildx build --name test-app .
 
     - name: test the image
       run: |
