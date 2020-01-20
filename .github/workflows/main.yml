@@ -2,6 +2,9 @@ name: CI
 
 on: [push]
 
+env:
+  BUILDX_URL: https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64
+
 jobs:
   build:
 
@@ -15,18 +18,12 @@ jobs:
       with:
         go-version: 1.13.6
 
-    - name: docker version
-      run: |
-        docker version
-
     - name: setup buildx
       run: |
-        mkdir -p ~/.docker/cli-plugins
-        curl -L -s https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64 \
-          -o ~/.docker/cli-plugins/docker-buildx
-        chmod a+x ~/.docker/cli-plugins/docker-buildx
-        echo '{"experimental": "enabled"}' > ~/.docker/config.json
-        cat ~/.docker/config.json
+        mkdir -p $HOME/.docker/cli-plugins
+        curl -L -s $BUILDX_URL -o $HOME/.docker/cli-plugins/docker-buildx
+        chmod a+x $HOME/.docker/cli-plugins/docker-buildx
+        echo '{"experimental": "enabled"}' > $HOME/.docker/config.json
         docker buildx version
 
     - name: build app
@@ -35,8 +32,8 @@ jobs:
 
     - name: build docker image
       run: |
-        docker buildx build --name test-app .
+        docker buildx build --platform linux/amd64 -t my-docker-image .
 
     - name: test the image
       run: |
-        docker run --rm test-app
+        docker run --rm my-docker-image
