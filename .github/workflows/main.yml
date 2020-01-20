@@ -24,9 +24,7 @@ jobs:
         curl -L -s -o ~/.docker/cli-plugins/docker-buildx \
           https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64
         chmod a+x ~/.docker/cli-plugins/docker-buildx
-        docker version
         #echo '{"experimental": "enabled"}' > ~/.docker/config.json
-        docker --help
         docker plugin ls
 
     - name: build app
