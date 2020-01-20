@@ -12,11 +12,13 @@ jobs:
 
     - name: change go version
       run: |
-        go env
         export GOROOT=/usr/local/go1.13
         go env
+        go build -o app
 
     - name: docker version
       run: |
-        docker version
+        export DOCKER_CLI_EXPERIMENTAL=enabled
         docker buildx build .
+        docker buildx build -o type=docker --name test-app .
+        docker run --rm test-app
