@@ -12,9 +12,6 @@ jobs:
 
     - name: change go version
       run: |
-        env
-        export PATH="/usr/local/go1.13/bin:$PATH"
-        go version
         go build -o app
 
     - name: docker version
