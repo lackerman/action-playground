@@ -14,4 +14,4 @@ jobs:
       run: docker version
 
     - name: go version
-      run: go version
+      run: go env
