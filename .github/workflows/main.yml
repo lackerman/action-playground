@@ -10,8 +10,13 @@ jobs:
     steps:
     - uses: actions/checkout@v1
 
-    - name: docker version
-      run: docker version
+    - name: change go version
+      run: |
+        go env
+        export GOROOT=/usr/local/go1.13
+        go env
 
-    - name: go version
-      run: go env
+    - name: docker version
+      run: |
+        docker version
+        docker buildx build .
