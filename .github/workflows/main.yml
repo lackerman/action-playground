@@ -15,20 +15,19 @@ jobs:
       with:
         go-version: 1.13.6
 
-    - name: setup buildx
+    - name: docker version
       run: |
         docker version
-        docker plugin ls
 
     - name: setup buildx
       run: |
         mkdir -p ~/.docker/cli-plugins
-        curl -L -s -o ~/.docker/cli-plugins/docker-buildx \
-          https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64
+        curl -L -s https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64 \
+          -o ~/.docker/cli-plugins/docker-buildx
         chmod a+x ~/.docker/cli-plugins/docker-buildx
         echo '{"experimental": "enabled"}' > ~/.docker/config.json
         cat ~/.docker/config.json
-        docker plugin ls
+        docker buildx version
 
     - name: build app
       run: |
