@@ -2,6 +2,9 @@ name: CI
 
 on: [push]
 
+env:
+  DOCKER_CLI_EXPERIMENTAL: enabled
+
 jobs:
   build:
 
@@ -15,12 +18,20 @@ jobs:
       with:
         go-version: 1.13.6
 
+    - name: setup buildx
+      run: |
+        mkdir -p ~/.docker/cli-plugins
+        curl -s -o ~/.docker/cli-plugins/docker-buildx \
+          https://github.com/docker/buildx/releases/download/v0.3.1/buildx-v0.3.1.linux-amd64
+
     - name: build app
       run: |
         go build -o app
 
-    - name: docker version
+    - name: build docker image
       run: |
-        export DOCKER_CLI_EXPERIMENTAL=enabled
         docker buildx build -o type=docker --name test-app .
+
+    - name: test the image
+      run: |
         docker run --rm test-app
