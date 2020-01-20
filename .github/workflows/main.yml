@@ -17,6 +17,5 @@ jobs:
     - name: docker version
       run: |
         export DOCKER_CLI_EXPERIMENTAL=enabled
-        docker buildx build .
         docker buildx build -o type=docker --name test-app .
         docker run --rm test-app
