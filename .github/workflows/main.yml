@@ -12,8 +12,9 @@ jobs:
 
     - name: change go version
       run: |
-        export GOROOT=/usr/local/go1.13
+        export PATH="/usr/local/go1.13/bin:$PATH"
         go env
+        go version
         go build -o app
 
     - name: docker version
