@@ -32,7 +32,7 @@ jobs:
 
     - name: build docker image
       run: |
-        docker buildx build --platform linux/amd64 -t my-docker-image .
+        docker buildx build --platform linux/arm/v7 -t my-docker-image .
 
     - name: test the image
       run: |
