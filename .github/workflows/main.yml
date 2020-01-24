@@ -32,8 +32,8 @@ jobs:
 
     - name: build docker image
       run: |
-        docker buildx build --platform linux/arm/v7 -t docker.pkg.github.com/${GITHUB_REPOSITORY}/hello-world:0.0.${GITHUB_ACTION} .
+        docker buildx build --push --platform linux/arm/v7 -t docker.pkg.github.com/${GITHUB_REPOSITORY}/hello-world:0.0.1 .
 
     - name: test the image
       run: |
-        docker run --rm docker.pkg.github.com/${GITHUB_REPOSITORY}/hello-world:0.0.${GITHUB_ACTION}
+        docker run --rm docker.pkg.github.com/${GITHUB_REPOSITORY}/hello-world:0.0.1
