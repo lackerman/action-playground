@@ -31,9 +31,13 @@ jobs:
         go build -o app
 
     - name: build docker image
+      env:
+        GITHUB_REPOSITORY: $GITHUB_REPOSITORY
       run: |
-        docker buildx build --push --platform linux/arm/v7 -t docker.pkg.github.com/$GITHUB_REPOSITORY/hello-world:0.0.1 .
+        docker buildx build --push --platform linux/arm/v7 -t docker.pkg.github.com/${GITHUB_REPOSITORY}/hello-world:0.0.1 .
 
     - name: test the image
+      env:
+        GITHUB_REPOSITORY: $GITHUB_REPOSITORY
       run: |
-        docker run --rm docker.pkg.github.com/$GITHUB_REPOSITORY/hello-world:0.0.1
+        docker run --rm docker.pkg.github.com/${GITHUB_REPOSITORY}/hello-world:0.0.1
